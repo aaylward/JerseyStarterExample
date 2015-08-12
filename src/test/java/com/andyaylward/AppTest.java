@@ -7,6 +7,7 @@ import com.hubspot.horizon.HttpRequest.ContentType;
 import com.hubspot.horizon.HttpRequest.Method;
 import com.hubspot.horizon.HttpResponse;
 import com.hubspot.horizon.apache.ApacheHttpClient;
+import ninja.freethrow.jerseystarter.config.StartupConfiguration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,7 +22,8 @@ public class AppTest {
 
   @BeforeClass
   public static void setup() throws Exception {
-    APP.run(false);
+    StartupConfiguration configuration = new StartupConfiguration(TEST_PORT, App.class.getPackage(), APP_ROOT);
+    APP.configure(configuration).run(false);
   }
 
   @AfterClass
