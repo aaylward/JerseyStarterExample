@@ -1,12 +1,13 @@
 package com.andyaylward;
 
-import ninja.freethrow.jerseystarter.JerseyStarter;
-import ninja.freethrow.jerseystarter.config.StartupConfiguration;
+import ninja.freethrow.jerseystarter.Service;
 
-public class App extends JerseyStarter {
+public class App {
   public static void main(String... args) {
-    StartupConfiguration configuration = StartupConfiguration
-        .fromEnvWithBasePackage(App.class.getPackage());
-    new App().configure(configuration).run();
+    buildService().run();
+  }
+
+  public static Service buildService() {
+    return Service.buildService(App.class.getPackage());
   }
 }

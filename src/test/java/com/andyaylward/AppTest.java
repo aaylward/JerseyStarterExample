@@ -7,6 +7,7 @@ import com.hubspot.horizon.HttpRequest.ContentType;
 import com.hubspot.horizon.HttpRequest.Method;
 import com.hubspot.horizon.HttpResponse;
 import com.hubspot.horizon.apache.ApacheHttpClient;
+import ninja.freethrow.jerseystarter.Service;
 import ninja.freethrow.jerseystarter.config.StartupConfiguration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -17,22 +18,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AppTest {
   private static final String APP_ROOT = "/test-service";
   private static final int TEST_PORT = 8080;
-  private static final App APP = new App();
   private static final HttpClient HTTP = new ApacheHttpClient();
+
+  private static Service SERVICE;
 
   @BeforeClass
   public static void setup() {
     System.setProperty(StartupConfiguration.PORT_PROPERTY_NAME, String.valueOf(TEST_PORT));
     System.setProperty(StartupConfiguration.CONTEXT_PATH_PROPERTY_NAME, APP_ROOT);
 
-    StartupConfiguration configuration = StartupConfiguration
-        .fromEnvWithBasePackage(App.class.getPackage());
-    APP.configure(configuration).run(false);
+    SERVICE = App.buildService();
+    SERVICE.run(false);
   }
 
   @AfterClass
   public static void cleanup() {
-    APP.stop();
+    SERVICE.stop();
   }
 
   @Test
