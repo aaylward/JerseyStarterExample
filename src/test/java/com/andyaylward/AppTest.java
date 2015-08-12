@@ -21,13 +21,17 @@ public class AppTest {
   private static final HttpClient HTTP = new ApacheHttpClient();
 
   @BeforeClass
-  public static void setup() throws Exception {
-    StartupConfiguration configuration = new StartupConfiguration(TEST_PORT, App.class.getPackage(), APP_ROOT);
+  public static void setup() {
+    System.setProperty(StartupConfiguration.PORT_PROPERTY_NAME, String.valueOf(TEST_PORT));
+    System.setProperty(StartupConfiguration.CONTEXT_PATH_PROPERTY_NAME, APP_ROOT);
+
+    StartupConfiguration configuration = StartupConfiguration
+        .fromEnvWithBasePackage(App.class.getPackage());
     APP.configure(configuration).run(false);
   }
 
   @AfterClass
-  public static void cleanup() throws Exception {
+  public static void cleanup() {
     APP.stop();
   }
 
