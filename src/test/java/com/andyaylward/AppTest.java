@@ -27,8 +27,7 @@ public class AppTest {
     System.setProperty(StartupConfiguration.PORT_PROPERTY_NAME, String.valueOf(TEST_PORT));
     System.setProperty(StartupConfiguration.CONTEXT_PATH_PROPERTY_NAME, APP_ROOT);
 
-    SERVICE = App.buildService();
-    SERVICE.run(false);
+    (SERVICE = App.buildService()).run(false);
   }
 
   @AfterClass
